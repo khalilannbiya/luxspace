@@ -17,8 +17,18 @@ class Product extends Model
         'slug'
     ];
 
-    public function galleries()
+    public function productGallery()
     {
-        return $this->hasMany(ProductGallery::class, 'products_id', 'id');
+        return $this->hasMany(ProductGallery::class, 'product_id', 'id');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class, 'product_id', 'id');
+    }
+
+    public function transactionItem()
+    {
+        return $this->hasMany(TransactionItem::class, 'product_id', 'id');
     }
 }

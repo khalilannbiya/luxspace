@@ -11,13 +11,13 @@ class TransactionItem extends Model
 
 
     protected $fillable = [
-        'users_id',
-        'products_id',
-        'transactions_id',
+        'user_id',
+        'product_id',
+        'transaction_id',
     ];
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'id', 'products_id');
+        return $this->belongsTo(Product::class, 'id', 'product_id');
     }
 }

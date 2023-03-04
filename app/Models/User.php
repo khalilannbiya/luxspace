@@ -60,13 +60,18 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function transactions()
+    public function transaction()
     {
-        return $this->hasMany(Transaction::class, 'users_id', 'id');
+        return $this->hasMany(Transaction::class, 'user_id', 'id');
     }
 
-    public function carts()
+    public function cart()
     {
-        return $this->hasMany(Cart::class, 'users_id', 'id');
+        return $this->hasMany(Cart::class, 'user_id', 'id');
+    }
+
+    public function transactionItem()
+    {
+        return $this->hasMany(TransactionItem::class, 'user_id', 'id');
     }
 }

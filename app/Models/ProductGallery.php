@@ -10,8 +10,13 @@ class ProductGallery extends Model
     use HasFactory;
 
     protected $fillable = [
-        'products_id',
+        'product_id',
         'url',
         'is_featured'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id', 'product_id');
+    }
 }
