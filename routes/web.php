@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/coba', function () {
+    return view('layouts.frontend');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
