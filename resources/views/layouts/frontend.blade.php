@@ -16,7 +16,6 @@
     <link rel="apple-touch-icon" href="{{ asset('frontend/images/content/favicon.png') }}" />
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}" />
     <link rel="icon" href="{{ asset('frontend/images/content/favicon.png') }}" />
 
     <meta name="theme-color" content="#000" />
