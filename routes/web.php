@@ -18,6 +18,8 @@ Route::get('/', [FrontendController::class, 'index'])->name('index');
 
 Route::get('/details/{slug}', [FrontendController::class, 'details'])->name('details');
 
+Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
