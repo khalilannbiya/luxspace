@@ -20,6 +20,8 @@ Route::get('/details/{slug}', [FrontendController::class, 'details'])->name('det
 
 Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
 
+Route::get('/checkout/success', [FrontendController::class, 'success'])->name('checkout-success');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
