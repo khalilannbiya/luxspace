@@ -18,7 +18,8 @@ class ProductGalleryController extends Controller
     {
         if (request()->ajax()) {
             $query = ProductGallery::query();
-            return DataTables::of($query)
+            $productGalleries = $query->where('product_id', $product->id)->get();
+            return DataTables::of($productGalleries)
                 ->addColumn('action', function ($item) {
                     return '
                         <form action="' . route('dashboard.gallery.destroy', $item->id) . '" method="post" class="inline-block">
