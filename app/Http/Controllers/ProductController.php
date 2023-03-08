@@ -23,6 +23,10 @@ class ProductController extends Controller
                         <a class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded shadow-lg" href="' . route('dashboard.product.edit', $item->id) . '">
                             Edit
                         </a>
+                        <form action="' . route('dashboard.product.destroy', $item->id) . '" method="post" class="inline-block">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold ml-3 py-1 px-3 rounded shadow-lg">Delete</button>
+                        ' . method_field('delete') . csrf_field() . '
+                        </form>
                     ';
                 })
                 ->editColumn('price', function ($item) {
@@ -89,8 +93,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('dashboard.product.index');
     }
 }
