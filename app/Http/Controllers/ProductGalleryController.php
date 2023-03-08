@@ -20,7 +20,7 @@ class ProductGalleryController extends Controller
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
-                        <form action="' . route('dashboard.product.destroy', $item->id) . '" method="post" class="inline-block">
+                        <form action="' . route('dashboard.gallery.destroy', $item->id) . '" method="post" class="inline-block">
                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold ml-3 py-1 px-3 rounded shadow-lg">Delete</button>
                         ' . method_field('delete') . csrf_field() . '
                         </form>
