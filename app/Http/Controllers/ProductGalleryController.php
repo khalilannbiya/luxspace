@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductGallery;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\ProductGalleryRequest;
 
 class ProductGalleryController extends Controller
 {
@@ -28,7 +29,7 @@ class ProductGalleryController extends Controller
                 })
                 ->editColumn('url', function ($item) {
                     return '
-                        <img class="max-w-[150px]" src="' . Storage::url($item->url) . '" alt="Image">
+                        <img style="max-width : 150px" src="' . Storage::url($item->url) . '" alt="Image">
                     ';
                 })
                 ->editColumn('is_featured', function ($item) {
@@ -51,9 +52,21 @@ class ProductGalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductGalleryRequest $request, Product $product)
     {
-        //
+        $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                $path = $file->store('public/gallery');
+
+                ProductGallery::create([
+                    'product_id' => $product->id,
+                    'url' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('dashboard.product.gallery.index', $product->id);
     }
 
     /**
