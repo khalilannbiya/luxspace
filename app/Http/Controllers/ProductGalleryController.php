@@ -97,8 +97,10 @@ class ProductGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ProductGallery $gallery)
     {
-        //
+        $gallery->delete();
+
+        return redirect()->route('dashboard.product.gallery.index', $gallery->product_id);
     }
 }
