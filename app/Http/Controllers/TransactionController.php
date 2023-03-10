@@ -71,9 +71,9 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Transaction $transaction)
     {
-        //
+        return view('pages.dashboard.transaction.edit', compact('transaction'));
     }
 
     /**
