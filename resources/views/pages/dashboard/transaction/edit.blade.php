@@ -40,6 +40,7 @@
                                 <option disabled>-------------------</option>
                                 <option value="PENDING">PENDING</option>
                                 <option value="SUCCESS">SUCCESS</option>
+                                <option value="CANCELLED">CANCELLED</option>
                                 <option value="CHALLENGE">CHALLENGE</option>
                                 <option value="FAILED">FAILED</option>
                                 <option value="SHIPPING">SHIPPING</option>
