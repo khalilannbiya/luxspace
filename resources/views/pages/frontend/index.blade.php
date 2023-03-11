@@ -142,7 +142,9 @@
                     </div>
                     {{-- Jika produk memiliki relasi productGallery() yang terhubung dengan gambar produk, maka kode
                     akan mengembalikan URL gambar produk yang disimpan di sistem penyimpanan, yaitu dengan memanggil
-                    method Storage::url() pada URL gambar--}}
+                    method Storage::url() pada URL gambar. Namun, jika produk tidak memiliki relasi productGallery()
+                    atau tidak memiliki gambar produk, maka kode akan mengembalikan string base64 yang merepresentasikan
+                    gambar kosong --}}
                     <img src="{{ $product->productGallery()->exists() ? Storage::url($product->productGallery->first()->url) : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' }}"
                         alt="image of {{ $product->name }}" class="w-full h-full object-cover object-center" />
                 </div>
