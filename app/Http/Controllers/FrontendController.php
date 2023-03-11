@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -11,7 +12,14 @@ class FrontendController extends Controller
      */
     public function index(Request $request)
     {
-        return view('pages.frontend.index');
+        /**
+         *  kumpulan data Product yang memiliki relasi productGallery,
+         * diurutkan berdasarkan tanggal pembuatan dari yang terbaru ke yang paling lama,
+         * dan dibatasi hanya 10 data saja.
+         */
+        $products = Product::with(['productGallery'])->latest()->limit(10)->get();
+
+        return view('pages.frontend.index', compact('products'));
     }
 
     public function details(Request $request, $slug)
