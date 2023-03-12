@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -46,6 +48,16 @@ class FrontendController extends Controller
     public function cart(Request $request)
     {
         return view('pages.frontend.cart');
+    }
+
+    public function cartAdd(Request $request, $id)
+    {
+        Cart::create([
+            'product_id' => $id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->route('cart');
     }
 
     public function success(Request $request)

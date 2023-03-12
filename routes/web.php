@@ -23,10 +23,19 @@ Route::get('/', [FrontendController::class, 'index'])->name('index');
 
 Route::get('/details/{slug}', [FrontendController::class, 'details'])->name('details');
 
-Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
+// Route yang hanya boleh di akses jika sudah login
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
+    Route::post('/cart/{id}', [FrontendController::class, 'cartAdd'])->name('cart-add');
 
-Route::get('/checkout/success', [FrontendController::class, 'success'])->name('checkout-success');
+    Route::get('/checkout/success', [FrontendController::class, 'success'])->name('checkout-success');
+});
 
+// Route yang hanya boleh di akses jika sudah login
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
