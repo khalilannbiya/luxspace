@@ -47,7 +47,15 @@ class FrontendController extends Controller
 
     public function cart(Request $request)
     {
-        return view('pages.frontend.cart');
+        /**
+         * Kode tersebut berfungsi untuk mengambil semua data keranjang belanja (cart) dari seorang pengguna yang sedang login (authenticated user).
+         * Cart::with(['product.productGallery']) digunakan untuk memuat relasi model produk (product) dengan model galeri produk (productGallery). Tujuannya agar informasi galeri produk dapat dimuat dalam satu query sehingga lebih efisien daripada memuat informasi galeri produk pada setiap produk terpisah.
+         * where('user_id', Auth::user()->id) digunakan untuk membatasi data hanya untuk cart yang dimiliki oleh pengguna yang sedang login.
+         * get() digunakan untuk mengambil data dalam bentuk kumpulan objek. Setelah kode tersebut dijalankan, variabel $carts akan berisi data keranjang belanja dari pengguna yang sedang login beserta informasi produk dan galeri produk yang terkait dengan masing-masing produk.
+         */
+        $carts = Cart::with(['product.productGallery'])->where('user_id', Auth::user()->id)->get();
+
+        return view('pages.frontend.cart', compact('carts'));
     }
 
     public function cartAdd(Request $request, $id)

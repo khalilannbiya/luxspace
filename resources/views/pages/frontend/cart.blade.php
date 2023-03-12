@@ -50,33 +50,55 @@
                     </div>
                 </div>
 
-                <p id="cart-empty" class="hidden text-center py-8">
-                    Ooops... Cart is empty
-                    <a href="details.html" class="underline">Shop Now</a>
-                </p>
+                {{-- @forelse merupakan directive di dalam framework Laravel yang digunakan untuk melakukan loop pada
+                data. Directive ini memiliki fungsi yang sama dengan @foreach, namun memiliki fitur tambahan untuk
+                menangani kondisi ketika data yang dilakukan loop-nya kosong. Dengan menggunakan @forelse, kita dapat
+                menampilkan pesan atau tindakan alternatif ketika data yang dilakukan loop-nya kosong, sehingga dapat
+                menghindari error atau pesan yang tidak diinginkan. --}}
+                @forelse ($carts as $cart)
 
-                <!-- START: ROW 1 -->
                 <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
                     <div class="px-4 flex-none">
                         <div class="" style="width: 90px; height: 90px">
-                            <img src="{{ asset('/frontend/images/content/chair-1.png') }}" alt="chair-1"
+
+                            {{-- $cart adalah variabel yang berisi data keranjang belanja.
+                            $cart->product digunakan untuk mengakses data produk yang terkait dengan keranjang belanja.
+                            $cart->product->productGallery() digunakan untuk memanggil relasi antara model produk dengan
+                            model galeri produk (productGallery).
+                            $cart->product->productGallery()->exists() adalah fungsi yang digunakan untuk memeriksa
+                            apakah terdapat data galeri produk yang terkait dengan produk yang ditampilkan pada
+                            keranjang belanja. Jika galeri produk ada, maka fungsi tersebut akan mengembalikan nilai
+                            true, jika tidak maka akan mengembalikan nilai false.
+                            Jika galeri produk ada, maka Storage::url($cart->product->productGallery->first()->url) akan
+                            mengembalikan URL gambar produk yang terdapat pada galeri produk. Fungsi Storage::url()
+                            digunakan untuk mengambil URL yang terkait dengan sebuah file yang tersimpan pada sistem
+                            penyimpanan seperti lokal storage, cloud storage, atau S3 storage. Dalam hal ini, kode
+                            tersebut digunakan untuk mengambil URL gambar produk yang tersimpan pada sistem penyimpanan
+                            aplikasi web.
+                            Jika galeri produk tidak ada, maka
+                            'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' akan
+                            digunakan sebagai gambar pengganti. Gambar ini merupakan gambar standar kosong yang terdiri
+                            dari 1 piksel berwarna putih dan umumnya digunakan sebagai fallback ketika gambar asli tidak
+                            tersedia atau tidak ditemukan. --}}
+                            <img src="{{ $cart->product->productGallery()->exists() ? Storage::url($cart->product->productGallery->first()->url) : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' }}"
+                                alt="Photo Product {{ $cart->product->name }}"
                                 class="object-cover rounded-xl w-full h-full" />
                         </div>
                     </div>
                     <div class="px-4 w-auto flex-1 md:w-5/12">
                         <div class="">
                             <h6 class="font-semibold text-lg md:text-xl leading-8">
-                                Saman Kakka
+                                {{ $cart->product->name }}
                             </h6>
                             <span class="text-sm md:text-lg">Office Room</span>
                             <h6 class="font-semibold text-base md:text-lg block md:hidden">
-                                IDR 28.000.000
+                                IDR {{ number_format($cart->product->price) }}
                             </h6>
                         </div>
                     </div>
                     <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
                         <div class="">
-                            <h6 class="font-semibold text-lg">IDR 28.000.000</h6>
+                            <h6 class="font-semibold text-lg">IDR {{ number_format($cart->product->price) }}</h6>
                         </div>
                     </div>
                     <div class="px-4 w-2/12">
@@ -87,75 +109,13 @@
                         </div>
                     </div>
                 </div>
-                <!-- END: ROW 1 -->
+                @empty
+                <p id="cart-empty" class="text-center py-8">
+                    Ooops... Cart is empty
+                    <a href="{{ route('index') }}" class="underline">Shop Now</a>
+                </p>
+                @endforelse
 
-                <!-- START: ROW 2 -->
-                <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="2">
-                    <div class="px-4 flex-none">
-                        <div class="" style="width: 90px; height: 90px">
-                            <img src="{{ asset('/frontend/images/content/chair-2.png') }}" alt="chair-2"
-                                class="object-cover rounded-xl w-full h-full" />
-                        </div>
-                    </div>
-                    <div class="px-4 w-auto flex-1 md:w-5/12">
-                        <div class="">
-                            <h6 class="font-semibold text-lg md:text-xl leading-8">
-                                Green Seat
-                            </h6>
-                            <span class="text-sm md:text-lg">Office Room</span>
-                            <h6 class="font-semibold text-base md:text-lg block md:hidden">
-                                IDR 28.000.000
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
-                        <div class="">
-                            <h6 class="font-semibold text-lg">IDR 12.500.000</h6>
-                        </div>
-                    </div>
-                    <div class="px-4 w-2/12">
-                        <div class="text-center">
-                            <button data-delete-item="2" class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                X
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: ROW 2 -->
-
-                <!-- START: ROW 3 -->
-                <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="3">
-                    <div class="px-4 flex-none">
-                        <div class="" style="width: 90px; height: 90px">
-                            <img src="{{ asset('/frontend/images/content/chair-3.png') }}" alt="chair-3"
-                                class="object-cover rounded-xl w-full h-full" />
-                        </div>
-                    </div>
-                    <div class="px-4 w-auto flex-1 md:w-5/12">
-                        <div class="">
-                            <h6 class="font-semibold text-lg md:text-xl leading-8">
-                                Pacific
-                            </h6>
-                            <span class="text-sm md:text-lg">Office Room</span>
-                            <h6 class="font-semibold text-base md:text-lg block md:hidden">
-                                IDR 28.000.000
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
-                        <div class="">
-                            <h6 class="font-semibold text-lg">IDR 88.800.000</h6>
-                        </div>
-                    </div>
-                    <div class="px-4 w-2/12">
-                        <div class="text-center">
-                            <button data-delete-item="3" class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                X
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: ROW 3 -->
             </div>
             <div class="w-full md:px-4 md:w-4/12" id="shipping-detail">
                 <div class="bg-gray-100 px-4 py-6 md:p-8 md:rounded-3xl">
