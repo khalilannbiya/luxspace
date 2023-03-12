@@ -29,42 +29,30 @@
         <div class="flex-1">
             <div class="slider">
                 <div class="thumbnail">
+                    @foreach ($product->productGallery as $item)
                     <div class="px-2">
-                        <div class="item selected"
-                            data-img="{{ asset('/frontend/images/content/showcase-1.front.jpg') }}">
-                            <img src="{{ asset('/frontend/images/content/showcase-1.front.jpg') }}" alt="front"
+
+                        {{-- Jika index tersebut adalah index pertama ($loop->first), maka kode akan mengembalikan
+                        string 'selected', Namun, jika index tersebut bukan merupakan index pertama, maka kode akan
+                        mengembalikan string kosong ('') --}}
+                        <div class="item {{ $loop->first ? 'selected': '' }}" data-img="{{ Storage::url($item->url) }}">
+                            <img src="{{ Storage::url($item->url) }}" alt="front"
                                 class="object-cover w-full h-full rounded-lg" />
                         </div>
                     </div>
-                    <div class="px-2">
-                        <div class="item" data-img="{{ asset('/frontend/images/content/showcase-1.back.jpg') }}">
-                            <img src="{{ asset('/frontend/images/content/showcase-1.back.jpg') }}" alt="back"
-                                class="object-cover w-full h-full rounded-lg" />
-                        </div>
-                    </div>
-                    <div class="px-2">
-                        <div class="item" data-img="{{ asset('/frontend/images/content/showcase-1.rear.jpg') }}">
-                            <img src="{{ asset('/frontend/images/content/showcase-1.rear.jpg') }}" alt="rear"
-                                class="object-cover w-full h-full rounded-lg" />
-                        </div>
-                    </div>
-                    <div class="px-2">
-                        <div class="item" data-img="{{ asset('/frontend/images/content/showcase-1.side.jpg') }}">
-                            <img src="{{ asset('/frontend/images/content/showcase-1.side.jpg') }}" alt="side"
-                                class="object-cover w-full h-full rounded-lg" />
-                        </div>
-                    </div>
-                    <div class="px-2">
-                        <div class="item" data-img="{{ asset('/frontend/images/content/showcase-1.top.jpg') }}">
-                            <img src="{{ asset('/frontend/images/content/showcase-1.top.jpg') }}" alt="top"
-                                class="object-cover w-full h-full rounded-lg" />
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="preview">
                     <div class="item rounded-lg h-full overflow-hidden">
-                        <img src="{{ asset('/frontend/images/content/showcase-1.front.jpg') }}" alt="front"
-                            class="object-cover w-full h-full rounded-lg" />
+
+                        {{-- Jika produk memiliki relasi productGallery() yang terhubung dengan gambar produk, maka kode
+                        akan mengembalikan URL gambar produk yang disimpan di sistem penyimpanan, yaitu dengan memanggil
+                        method Storage::url() pada URL gambar. Namun, jika produk tidak memiliki relasi productGallery()
+                        atau tidak memiliki gambar produk, maka kode akan mengembalikan string base64
+                        yang merepresentasikan
+                        gambar kosong --}}
+                        <img src="{{ $product->productGallery()->exists() ? Storage::url($product->productGallery->first()->url) : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' }}"
+                            alt="front" class="object-cover w-full h-full rounded-lg" />
                     </div>
                 </div>
             </div>

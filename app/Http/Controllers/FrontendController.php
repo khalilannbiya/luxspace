@@ -24,7 +24,15 @@ class FrontendController extends Controller
 
     public function details(Request $request, $slug)
     {
-        return view('pages.frontend.details');
+        /**
+         * Pertama-tama, kita mendefinisikan variabel $product dan memanggil model Product.
+         * Kemudian, kita menggunakan metode with() untuk memuat kaitan relasional productGallery.
+         * Kemudian, kita menggunakan metode where() untuk memfilter data Product berdasarkan kolom slug yang sama dengan nilai variabel $slug.
+         * Terakhir, kita menggunakan metode firstOrFail() untuk mengambil data pertama yang sesuai dengan kriteria pencarian, atau mengembalikan HTTP error 404 jika tidak ada data yang sesuai.
+         */
+        $product = Product::with(['productGallery'])->where('slug', $slug)->firstOrFail();
+
+        return view('pages.frontend.details', compact('product'));
     }
 
     public function cart(Request $request)
