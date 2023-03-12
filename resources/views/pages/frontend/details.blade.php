@@ -23,8 +23,8 @@
 <section class="container mx-auto">
     <div class="flex flex-wrap my-4 md:my-12">
         <div class="w-full md:hidden px-4">
-            <h2 class="text-5xl font-semibold">Chair Thatty</h2>
-            <span class="text-xl">IDR 12.000.000</span>
+            <h2 class="text-5xl font-semibold">{{ $product->name }}</h2>
+            <span class="text-xl">IDR {{ number_format($product->price) }}</span>
         </div>
         <div class="flex-1">
             <div class="slider">
@@ -58,8 +58,8 @@
             </div>
         </div>
         <div class="flex-1 px-4 md:p-6">
-            <h2 class="text-5xl font-semibold">Chair Thatty</h2>
-            <p class="text-xl">IDR 12.000.000</p>
+            <h2 class="text-5xl font-semibold">{{ $product->name }}</h2>
+            <p class="text-xl">IDR {{ number_format($product->price) }}</p>
 
             <a href="cart.html"
                 class="transition-all duration-200 bg-pink-400 text-black focus:bg-black focus:text-pink-400 rounded-full px-8 py-3 mt-4 inline-flex"><svg
@@ -80,14 +80,7 @@
 
             <h6 class="text-xl font-semibold mb-4">About the product</h6>
             <p class="text-xl leading-7 mb-6">
-                Tailored to a level of perfection synonymous with that of a Savile
-                Row suit and with understated quality in the detail, Jetty has been
-                influenced by timeless 1950s style.
-            </p>
-            <p class="text-xl leading-7">
-                Providing a subtle nod to the past, Jetty also provides a perfect
-                solution for the way we work today. A comprehensive product family,
-                Jetty features a variety of elegant chairs and sofas.
+                {!! $product->description !!}
             </p>
         </div>
     </div>
