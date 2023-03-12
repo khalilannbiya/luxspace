@@ -96,58 +96,22 @@
             </h3>
         </div>
         <div class="flex overflow-x-auto mb-4 -mx-3">
+            @foreach ($recommendations as $recommendation)
             <div class="px-3 flex-none" style="width: 320px">
                 <div class="rounded-xl p-4 pb-8 relative bg-white">
                     <div class="rounded-xl overflow-hidden card-shadow w-full h-36">
-                        <img src="{{ asset('/frontend/images/content/chair-1.png') }}" alt=""
+                        <img src="{{ $recommendation->productGallery()->exists() ? Storage::url($recommendation->productGallery->first()->url) : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' }}"
+                            alt="Recommendation Product {{ $recommendation->name }}"
                             class="w-full h-full object-cover object-center" />
                     </div>
-                    <h5 class="text-lg font-semibold mt-4">Cangkir Mauttie</h5>
-                    <span class="">IDR 89.300.000</span>
-                    <a href="details.html" class="stretched-link">
+                    <h5 class="text-lg font-semibold mt-4">{{ $recommendation->name }}</h5>
+                    <span class="">IDR {{ number_format($recommendation->price) }}</span>
+                    <a href="{{ route('details', $recommendation->slug) }}" class="stretched-link">
                         <!-- fake children -->
                     </a>
                 </div>
             </div>
-            <div class="px-3 flex-none" style="width: 320px">
-                <div class="rounded-xl p-4 pb-8 relative bg-white">
-                    <div class="rounded-xl overflow-hidden card-shadow w-full h-36">
-                        <img src="{{ asset('/frontend/images/content/chair-2.png') }}" alt=""
-                            class="w-full h-full object-cover object-center" />
-                    </div>
-                    <h5 class="text-lg font-semibold mt-4">Saman Kakka</h5>
-                    <span class="">IDR 14.500.399</span>
-                    <a href="details.html" class="stretched-link">
-                        <!-- fake children -->
-                    </a>
-                </div>
-            </div>
-            <div class="px-3 flex-none" style="width: 320px">
-                <div class="rounded-xl p-4 pb-8 relative bg-white">
-                    <div class="rounded-xl overflow-hidden card-shadow w-full h-36">
-                        <img src="{{ asset('/frontend/images/content/chair-3.png') }}" alt=""
-                            class="w-full h-full object-cover object-center" />
-                    </div>
-                    <h5 class="text-lg font-semibold mt-4">Lino Dino</h5>
-                    <span class="">IDR 22.000.000</span>
-                    <a href="details.html" class="stretched-link">
-                        <!-- fake children -->
-                    </a>
-                </div>
-            </div>
-            <div class="px-3 flex-none" style="width: 320px">
-                <div class="rounded-xl p-4 pb-8 relative bg-white">
-                    <div class="rounded-xl overflow-hidden card-shadow w-full h-36">
-                        <img src="{{ asset('/frontend/images/content/chair-1.png') }}" alt=""
-                            class="w-full h-full object-cover object-center" />
-                    </div>
-                    <h5 class="text-lg font-semibold mt-4">Syail Ammeno</h5>
-                    <span class="">IDR 6.399.999</span>
-                    <a href="details.html" class="stretched-link">
-                        <!-- fake children -->
-                    </a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>

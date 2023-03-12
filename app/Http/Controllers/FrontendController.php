@@ -32,7 +32,15 @@ class FrontendController extends Controller
          */
         $product = Product::with(['productGallery'])->where('slug', $slug)->firstOrFail();
 
-        return view('pages.frontend.details', compact('product'));
+        /**
+         * Pertama-tama, kita mendefinisikan variabel $recommendations dan memanggil model Product.
+         * Kemudian, kita menggunakan metode with() untuk memuat kaitan relasional productGallery.
+         * Kemudian, kita menggunakan metode whereNot() untuk memfilter data Product dengan menghilangkan data yang memiliki kolom slug yang sama dengan nilai variabel $slug.
+         * Metode inRandomOrder() digunakan untuk mengurutkan data secara acak sebelum diambil, dan metode limit() digunakan untuk membatasi jumlah data yang diambil, dalam hal ini sebanyak 4 data saja. Terakhir, kita menggunakan metode get() untuk mengeksekusi query dan mengambil data.
+         */
+        $recommendations = Product::with(['productGallery'])->whereNot('slug', $slug)->inRandomOrder()->limit(4)->get();
+
+        return view('pages.frontend.details', compact('product', 'recommendations'));
     }
 
     public function cart(Request $request)
