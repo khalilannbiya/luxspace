@@ -33,6 +33,7 @@ Route::middleware([
     Route::post('/cart/{id}', [FrontendController::class, 'cartAdd'])->name('cart-add');
     Route::delete('/cart/{id}', [FrontendController::class, 'cartDelete'])->name('cart-delete');
 
+    Route::post('/checkout', [FrontendController::class, 'checkout'])->name('checkout');
     Route::get('/checkout/success', [FrontendController::class, 'success'])->name('checkout-success');
 });
 
