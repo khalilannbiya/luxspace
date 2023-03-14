@@ -120,6 +120,10 @@
                     <a href="{{ route('index') }}" class="underline">Shop Now</a>
                 </p>
                 @endforelse
+                <div>
+                    <h6 class="font-semibold text-xl">Total Price : IDR <span>{{ number_format($total_price) }}</span>
+                    </h6>
+                </div>
 
             </div>
             <div class="w-full md:px-4 md:w-4/12" id="shipping-detail">

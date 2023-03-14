@@ -54,8 +54,13 @@ class FrontendController extends Controller
          * get() digunakan untuk mengambil data dalam bentuk kumpulan objek. Setelah kode tersebut dijalankan, variabel $carts akan berisi data keranjang belanja dari pengguna yang sedang login beserta informasi produk dan galeri produk yang terkait dengan masing-masing produk.
          */
         $carts = Cart::with(['product.productGallery'])->where('user_id', Auth::user()->id)->get();
+        $total_price = 0;
 
-        return view('pages.frontend.cart', compact('carts'));
+        foreach ($carts as $cart) {
+            $total_price  += $cart->product->price;
+        }
+
+        return view('pages.frontend.cart', compact('carts', 'total_price'));
     }
 
     public function cartAdd(Request $request, $id)
