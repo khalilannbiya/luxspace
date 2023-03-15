@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Midtrans\Snap;
 use App\Models\Cart;
+use Midtrans\Config;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\TransactionItem;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CheckoutRequest;
 
 class FrontendController extends Controller
 {
@@ -79,6 +85,75 @@ class FrontendController extends Controller
         $cart->delete();
 
         return redirect()->route('cart');
+    }
+
+    public function checkout(CheckoutRequest $request)
+    {
+        $data = $request->all();
+
+        // Get Carts Data
+        $carts = Cart::with(['product'])->where('user_id', Auth::user()->id)->get();
+
+        // Add to Transaction data
+        $data['user_id'] = Auth::user()->id;
+        $data['courier'] = 'JNE Express';
+        $data['total_price'] = $carts->sum('product.price');
+
+        // Create transaction
+        $transaction = Transaction::create($data);
+
+        // Create Transaction Item
+        foreach ($carts as $cart) {
+            $items[] = TransactionItem::create([
+                'transaction_id' => $transaction->id,
+                'user_id' => $cart->user_id,
+                'product_id' => $cart->product_id
+            ]);
+        }
+
+        // Delete cart after transaction
+        Cart::where('user_id', Auth::user()->id)->delete();
+
+        // Configure midtrans
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
+
+        // Setup variable midtrans
+        $midtrans = [
+            'transaction_details' => [
+                "order_id" => 'LUX-' . $transaction->id,
+                "gross_amount" => (int) $transaction->total_price
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->name,
+                'email' => $transaction->email
+            ],
+            'enabled_payments' => ['gopay', 'shopeepay', 'bank_transfer'],
+            "gopay" => [
+                "enable_callback" => true,
+                "callback_url" => "http://gopay.com"
+            ],
+            "shopeepay" => [
+                "callback_url" => "http://shopeepay.com?order_id=LUX-" . $transaction->id
+            ],
+            'vtweb' => []
+        ];
+
+        // Payment process
+        try {
+            // Get Snap Payment Page URL
+            $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+
+            $transaction->payment_url = $paymentUrl;
+            $transaction->save();
+
+            // Redirect to Snap Payment Page
+            return redirect($paymentUrl);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function success(Request $request)
