@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MyTransactionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductGalleryController;
 use App\Http\Controllers\TransactionController;
@@ -44,6 +45,9 @@ Route::middleware([
     'verified'
 ])->name('dashboard.')->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::resource('my-transaction', MyTransactionController::class)->only([
+        'index', 'show'
+    ]);
 
     // Route yang hanya boleh di akses jika role usernya adalah ADMIN
     Route::middleware(['admin'])->group(function () {
