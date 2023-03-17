@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'midtrans' => [
+        'serverKey' => env('MIDTRANS_SERVER_KEY'), //Set your Merchant Server Key
+        'clientKey' => env('MIDTRANS_CLIENT_KEY'),
+        'isProduction' => env('MIDTRANS_IS_PRODUCTION', false), // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        'isSanitized' => env('MIDTRANS_IS_SANITIZED', true), // Set sanitization on (default)
+        'is3ds' => env('MIDTRANS_IS_3DS', true), // Set 3DS transaction for credit card to true
+
+    ]
+
 ];
