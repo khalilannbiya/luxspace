@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 
+Route::get('/catalog', [FrontendController::class, 'catalog'])->name('catalog');
+
 Route::get('/details/{slug}', [FrontendController::class, 'details'])->name('details');
 
 // Route yang hanya boleh di akses jika sudah login
