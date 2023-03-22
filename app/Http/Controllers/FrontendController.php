@@ -164,9 +164,10 @@ class FrontendController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function catalog(Product $product)
     {
-        //
+        $products = Product::with(['productGallery'])->latest()->get();
+        return view('pages.frontend.catalog', compact('products'));
     }
 
     /**

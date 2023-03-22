@@ -16,10 +16,13 @@
     <link rel="apple-touch-icon" href="{{ asset('frontend/images/content/favicon.png') }}" />
     <!-- Place favicon.ico in the root directory -->
 
+    @vite('resources/css/app.css')
+
     <link rel="icon" href="{{ asset('frontend/images/content/favicon.png') }}" />
 
     <meta name="theme-color" content="#000" />
     <link rel="icon" href="{{ asset('frontend/favicon.ico') }}">
+
     <link href="{{ asset('frontend/css/app.minify.css') }}" rel="stylesheet">
 </head>
 
