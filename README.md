@@ -4,9 +4,8 @@ Furniture e-commerce is an online business that offers furniture and household p
 
 ## Tech Stack
 
-- **Client :** Tailwind, Blade Template
-- **Server :** PHP with Laravel
-
+-   **Client :** Tailwind, Blade Template
+-   **Server :** PHP with Laravel
 
 ## Run Locally
 
@@ -81,7 +80,6 @@ Setup Mailtrap for email testing in file .env
   MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-
 Generate key
 
 ```bash
@@ -89,6 +87,12 @@ Generate key
 ```
 
 Migrate database
+
+```bash
+  php artisan migrate
+```
+
+Run User Seeder
 
 ```bash
   php artisan migrate
@@ -111,20 +115,20 @@ Run serve
 ```bash
   php artisan serve
 ```
+
 ## Documentation
 
-- [Tailwind](https://tailwindcss.com/docs/installation)
-- [Blade Template](https://laravel.com/docs/9.x/blade)
-- [Laravel](https://laravel.com/docs/9.x)
+-   [Tailwind](https://tailwindcss.com/docs/installation)
+-   [Blade Template](https://laravel.com/docs/9.x/blade)
+-   [Laravel](https://laravel.com/docs/9.x)
 
 ## Features
 
-- Product Management
-- Transaction Management
-- Login
-- Register
-- Checkout Product 
-
+-   Product Management
+-   Transaction Management
+-   Login
+-   Register
+-   Checkout Product
 
 ## Feedback
 
