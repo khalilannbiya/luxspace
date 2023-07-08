@@ -95,7 +95,7 @@ Migrate database
 Run User Seeder
 
 ```bash
-  php artisan migrate
+  php artisan db:seed --class=UserSeeder
 ```
 
 Install node_modules
