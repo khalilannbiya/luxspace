@@ -44,6 +44,8 @@ Copy the .env file from .env.example.
   cp .env.example .env
 ```
 
+Please don't forget to create the 'luxspace' database in phpMyAdmin.
+
 Configure the .env file
 
 ```bash
