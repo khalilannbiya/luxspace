@@ -86,6 +86,11 @@ Generate key
   php artisan key:generate
 ```
 
+Create symlink
+```bash
+  php artisan storage:link
+```
+
 Migrate database
 
 ```bash
